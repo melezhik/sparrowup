@@ -43,7 +43,26 @@ when running service via morbo, follow morbo documentation.
 
 ## Schedule a server check
 
-    $ curl 127.0.0.1:3000
+POST /check/$server/$project
+
+where $server is ip adress or hostname, $project is project name ( a proper directort should exist in reposiotry )  
+
+Example:
+
+    # Checks if nginx is running on 192.168.0.1
+
+    $ cat /path/to/repo/nginx/sparrowdo
+
+    task_run  %(
+      task => 'check my nginx process',
+      plugin => 'proc-validate',
+      parameters => %(
+        pid_file => '/var/run/nginx.pid',
+        footprint => 'nginx.*master'
+      )
+    );
+    
+    $ curl -d '' 127.0.0.1:3000/check/192.168.0.0.1/nginx
 
 
 # See also
