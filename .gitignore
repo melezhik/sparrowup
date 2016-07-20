@@ -1,0 +1,7 @@
+db/*
+local/
+public
+*.log
+*.pid
+cpanfile.snapshot
+
