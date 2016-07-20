@@ -35,9 +35,20 @@ A structure of  repository should be:
 So on ...
 
 
+# Running Job queue
+
+A Minion asynchronous job executor should be launched to handle incoming check requests.
+
+For example:
+
+    $ cd whatsup 
+    $ nohup carton exec ./app.pl minion worker -m production -I 15 -j 2 > /dev/null 2>&1 &
+
+Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on using job queue.
+
 # Whatsup api
 
-All the API is exposed as http service API accessible by 0.0.0.0:3000. A bind adress / port number could be changed
+All the API is exposed as http service API accessible by 0.0.0.0:3000. A bind address / port number could be changed
 when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicious/script/morbo), follow morbo documentation.
 
 
@@ -45,7 +56,7 @@ when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicio
 
 POST /check/$project/$server
 
-where $server is ip adress or hostname, $project is project name ( a proper directory should exist in repository )  
+where $server is ip address or hostname, $project is project name ( a proper directory should exist in repository )  
 
 Example:
 
@@ -65,6 +76,13 @@ Example:
     $ curl -d '' 127.0.0.1:3000/check/nginx/192.168.0.0.1
 
 
+## Get a server status
+
+GET /status/$server
+
+Once check is scheduled it's queued and eventually will be executed.
+
+
 # See also
 
 * [Sparrowdo/Sparrow](https://sparrowhub.org)
@@ -72,6 +90,8 @@ Example:
 * [Mojolicious](http://mojolicio.us)
 
 * [morbo](https://metacpan.org/pod/distribution/Mojolicious/script/morbo)
+
+* [Minion](https://metacpan.org/pod/Minion)
 
 # AUTHOR
 
