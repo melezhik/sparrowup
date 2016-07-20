@@ -17,16 +17,16 @@ Sparrowdo
 
 # Configuration
 
-You sould checkout some sparrowdo scenarios:
+You should checkout some sparrowdo scenarios:
 
 
     $ git clone $some-remote-repository /path/to/repo
 
-And point it to the running wu service:
+And point it to the running whatsup service:
 
     $ cd whatsup REPO=/path/to/repo carton exec morbo app.pl
 
-A structure of  reposiotory should be:
+A structure of  repository should be:
 
     $ project-foo/sparrowfile
     $ project-bar/sparrowfile
@@ -45,7 +45,7 @@ when running service via morbo, follow morbo documentation.
 
 POST /check/$server/$project
 
-where $server is ip adress or hostname, $project is project name ( a proper directort should exist in reposiotry )  
+where $server is ip adress or host-name, $project is project name ( a proper directory should exist in repository )  
 
 Example:
 
