@@ -105,6 +105,12 @@ For example:
     $ sleep 10
     $ curl 127.0.0.1:3000/status/192.168.0.0.1
 
+## Reports
+
+All generated reports are accessible as static pages.
+
+    $ firefox 127.0.0.1:3000
+
 # See also
 
 * [Sparrowdo/Sparrow](https://sparrowhub.org)
