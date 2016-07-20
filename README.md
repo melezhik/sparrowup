@@ -43,9 +43,9 @@ when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicio
 
 ## Schedule a server check
 
-POST /check/$server/$project
+POST /check/$project/$server
 
-where $server is ip adress or host-name, $project is project name ( a proper directory should exist in repository )  
+where $server is ip adress or hostname, $project is project name ( a proper directory should exist in repository )  
 
 Example:
 
@@ -62,7 +62,7 @@ Example:
       )
     );
     
-    $ curl -d '' 127.0.0.1:3000/check/192.168.0.0.1/nginx
+    $ curl -d '' 127.0.0.1:3000/check/nginx/192.168.0.0.1
 
 
 # See also
