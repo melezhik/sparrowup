@@ -24,7 +24,7 @@ You should checkout some sparrowdo scenarios:
 
 And point it to the running whatsup service:
 
-    $ cd whatsup REPO=/path/to/repo carton exec morbo app.pl
+    $ cd whatsup && REPO=/path/to/repo carton exec morbo app.pl
 
 A structure of  repository should be:
 
@@ -75,6 +75,24 @@ Example:
     
     $ curl -d '' 127.0.0.1:3000/check/nginx/192.168.0.0.1
 
+
+Advanced usage. 
+
+You may pass additional parameters to set up credentials to use when issuing ssh connect to target host:
+
+### ssh-user
+
+A ssh-user ID
+
+### identity_file
+
+Path to identity file
+
+`man ssh` to know more about these parameters.
+
+For example:
+
+    $ curl -d ssh-user=admin -d identity_file=~/.ssh/admin.pem  127.0.0.1:3000/check/nginx/192.168.0.0.1
 
 ## Get a server status
 
