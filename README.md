@@ -46,7 +46,7 @@ For example:
 
 Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on using job queue.
 
-# Whatsup api
+# Whatsup API
 
 All the API is exposed as http service API accessible by 0.0.0.0:3000. A bind address / port number could be changed
 when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicious/script/morbo), follow morbo documentation.
@@ -82,6 +82,10 @@ GET /status/$server
 
 Once check is scheduled it's queued and eventually will be executed.
 
+For example:
+
+    $ sleep 10
+    $ curl 127.0.0.1:3000/status/192.168.0.0.1
 
 # See also
 
