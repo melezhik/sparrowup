@@ -1,4 +1,4 @@
-db/*
+db/minion.db
 local/
 public
 *.log

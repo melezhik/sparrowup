@@ -42,7 +42,7 @@ A Minion asynchronous job executor should be launched to handle incoming check r
 For example:
 
     $ cd whatsup 
-    $ nohup carton exec ./app.pl minion worker -m production -I 15 -j 2 > /dev/null 2>&1 &
+    $ REPO=/path/to/repo carton exec ./app.pl minion worker 
 
 Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on using job queue.
 
@@ -54,7 +54,7 @@ when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicio
 
 ## Schedule a server check
 
-POST /check/$project/$server
+POST $server /check/$project
 
 where $server is ip address or hostname, $project is project name ( a proper directory should exist in repository )  
 
@@ -73,7 +73,7 @@ Example:
       )
     );
     
-    $ curl -d '' 127.0.0.1:3000/check/nginx/192.168.0.0.1
+    $ curl -d 'server=192.168.0.0.1' 127.0.0.1:3000/check/nginx
 
 
 Advanced usage. 
@@ -92,7 +92,7 @@ Path to identity file
 
 For example:
 
-    $ curl -d ssh-user=admin -d identity_file=~/.ssh/admin.pem  127.0.0.1:3000/check/nginx/192.168.0.0.1
+    $ curl -d server=192.168.0.0.1 -d ssh-user=admin -d identity_file=~/.ssh/admin.pem  127.0.0.1:3000/check/nginx
 
 ## Get a server status
 
