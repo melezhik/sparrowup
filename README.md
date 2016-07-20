@@ -37,8 +37,8 @@ So on ...
 
 # Whatsup api
 
-All the API is exposed as http service API accessible by 0.0.0.0:3000. A port number could be changed
-when running service via morbo, follow morbo documentation.
+All the API is exposed as http service API accessible by 0.0.0.0:3000. A bind adress / port number could be changed
+when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicious/script/morbo), follow morbo documentation.
 
 
 ## Schedule a server check
@@ -70,6 +70,8 @@ Example:
 * [Sparrowdo/Sparrow](https://sparrowhub.org)
 
 * [Mojolicious](http://mojolicio.us)
+
+* [morbo](https://metacpan.org/pod/distribution/Mojolicious/script/morbo)
 
 # AUTHOR
 
