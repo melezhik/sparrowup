@@ -2,16 +2,17 @@
 
 <div class="panel panel-default">
 
-  <div class="panel-heading"><strong>WhatsUP Report. ID <%= $check_id %></strong></div>
+  <div class="panel-heading"><strong>WhatsUP Report ID: <%= $check_id %></strong></div>
 
-    <div class="panel-body">
+  <div class="panel-body">
+  
     <pre class="report">
-      <%= $data2 %>
+
+    <%== $out %>
     </pre>
-    </div>
+
+  </div>
 
   </div>
 
 </div>
-
-

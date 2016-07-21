@@ -112,15 +112,20 @@ get '/report/:report'  => sub {
     my $check_id = $c->stash('report');
 
     my $h = HTML::FromANSI->new(
-        fill_cols   => 1,
+        fill_cols   => 1, linewrap => 1, lf_to_crlf => 1, cols => 70
     );
     
     open REPORT, "public/$check_id.txt" or confess "can't open file public/$check_id.txt to read : $!";
     $h->add_text(<REPORT>);
     close REPORT;
 
+    #return $c->render(text => "OK", status => 200);
 
-   $c->render( template => 'report',  data => $h->html, check_id => $check_id  );
+   return $c->render( 
+    template => 'report',  
+    out => $h->html, 
+    check_id => $check_id  
+  );
 
     
 };
