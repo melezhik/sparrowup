@@ -3,6 +3,7 @@
 use strict;
 use Mojolicious::Lite;
 use Carp;
+use Data::UUID;
 use File::Basename;
 use Mojo::Log;
 use Mojo::SQLite;
@@ -17,8 +18,24 @@ helper sparrowdo_run => sub {
   
     my ($c, $project, $server, $params) = @_;
 
-    die "check failed!" 
-      unless system("cd $ENV{REPO}/$project && sparrowdo --verbose --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}  --host=$server");
+    my $uid_obj = Data::UUID->new;
+    my $uid     = $uid_obj->create();
+    my $token =  $uid_obj->to_string($uid);
+
+    my $cmd = "cd $ENV{REPO}/$project && sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
+
+    $cmd.=" --host=$server 1>public/$token.txt 2>&1"
+
+    $cmd.=" --ssh_user=".($c->param('ssh_user')) if ($c->param('ssh_user')); 
+
+    $cmd.=" --ssh_port=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
+
+    $cmd.=" --indentity_file=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
+
+    $cmd.=" 1>public/$token.txt 2>&1"
+
+    $st = system($cmd);
+
 
 };
 

@@ -4,4 +4,4 @@ requires 'Minion::Backend';
 requires 'Mojolicious::Plugin::Minion';
 requires 'Minion::Backend::SQLite';
 requires 'Mojo::SQLite';
-requires 'version';
+requires 'Data::UUID';

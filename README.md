@@ -80,15 +80,20 @@ Advanced usage.
 
 You may pass additional parameters to set up credentials to use when issuing ssh connect to target host:
 
-### ssh-user
+### ssh_user
 
-A ssh-user ID
+A ssh_user ID
+
+### ssh_port
+
+A server ssh port to connect to
 
 ### identity_file
 
 Path to identity file
 
-`man ssh` to know more about these parameters.
+Follow [sparrowdo documentation](https://github.com/melezhik/sparrowdo#sparrowdo-client-command-line-parameters)
+to know more about sparrowdo client parameters.
 
 For example:
 
@@ -103,7 +108,7 @@ Once check is scheduled it's queued and eventually will be executed.
 For example:
 
     $ sleep 10
-    $ curl 127.0.0.1:3000/status/192.168.0.0.1
+    $ curl -G -d server=192.168.0.1 127.0.0.1:3000/status
 
 ## Reports
 
