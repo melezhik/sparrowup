@@ -29,7 +29,11 @@
     <%= $i->{time} %>
   </td>
   <td>
-    <%= $i->{status} %>
+    <% if ($i->{status} ne 'not exist') { %>
+      <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+    <% } else { %>
+      <%= $i->{status} %>
+    <% } %>
   </td>
 
   </tr>
