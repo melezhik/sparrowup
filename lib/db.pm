@@ -38,7 +38,7 @@ sub get_checks_from_db {
 
     my $db = $sql->db;
 
-    my $db_results = $db->query('select check_id, project, server, status, t from checks');
+    my $db_results = $db->query('select check_id, project, server, status, t from checks order by t desc');
 
     my $list;
 
