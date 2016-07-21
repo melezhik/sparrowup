@@ -6,10 +6,7 @@
 
   <div class="panel-body">
   
-    <pre class="report">
-
-    <%== $out %>
-    </pre>
+    <pre class="report"><%== $out %></pre>
 
   </div>
 
