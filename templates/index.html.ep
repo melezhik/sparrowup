@@ -31,19 +31,19 @@
   <td>
     <% if ($i->{status} eq 'scheduled') { %>
       <span class="label label-default">
-        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+        <a href="/report/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
       </span>
     <% } elsif ($i->{status} eq 'ok') { %>
       <span class="label label-success">
-        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+        <a href="/report/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
       </span>
     <% } elsif ($i->{status} eq 'proccessing') { %>
       <span class="label label-primary">
-        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+        <a href="/report/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
       </span>
     <% } elsif ($i->{status} eq 'fail') { %>
       <span class="label label-danger">
-        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+        <a href="/report/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
       </span>
     <% } else { %>
       <span class="label label-warning">

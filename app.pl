@@ -10,6 +10,7 @@ use Mojo::SQLite;
 use Minion::Backend;
 use Minion;
 use Cwd;
+use HTML::FromANSI (); # avoid exports if using OO
 
 use constant repo_root => 'public/';
 
@@ -103,6 +104,26 @@ get '/' => sub {
 
 };
 
+
+get '/report/:report'  => sub {
+
+    my $c = shift;
+
+    my $check_id = $c->stash('report');
+
+    my $h = HTML::FromANSI->new(
+        fill_cols   => 1,
+    );
+    
+    open REPORT, "" or confess "can't open file public/$check_id.txt to read : $!";
+    $h->add_text(<REPORT>);
+    close REPORT;
+
+
+   $c->render( template => 'report',  data => $h->html, check_id => $check_id  );
+
+    
+};
 
 sub startup {
 
