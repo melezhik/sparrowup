@@ -24,7 +24,7 @@ helper sparrowdo_run => sub {
     my $uid      = $uid_obj->create();
     my $check_id =  $uid_obj->to_string($uid);
 
-    if (-d $ENV{REPO}/$project){
+    if (-d "$ENV{REPO}/$project"){
 
       my $cmd = "cd $ENV{REPO}/$project && sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
   

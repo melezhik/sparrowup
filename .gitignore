@@ -1,6 +1,6 @@
 db/minion.db
 local/
-public
+public/*.txt
 *.log
 *.pid
 cpanfile.snapshot
