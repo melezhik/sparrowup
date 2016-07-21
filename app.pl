@@ -19,13 +19,11 @@ require 'lib/db.pm';
 
 helper sparrowdo_run => sub {
   
-    my ($c, $project, $server, $params) = @_;
-
-    my $uid_obj  = Data::UUID->new;
-    my $uid      = $uid_obj->create();
-    my $check_id =  $uid_obj->to_string($uid);
+    my ($c, $project, $server, $check_id, $params) = @_;
 
     my $log = Mojo::Log->new();
+
+    update_check_in_db($check_id, 'proccessing');
 
     if (-d "$ENV{REPO}/$project"){
 
@@ -42,8 +40,6 @@ helper sparrowdo_run => sub {
       $cmd.=" --host=$server";
 
       $cmd.=" 1>$cdir/public/$check_id.txt 2>&1";
-
-      insert_check_into_db($check_id,$project,$server);
 
 
       $log->info("sparrowdo run scheduled ... : $cmd");
@@ -85,9 +81,15 @@ post '/check/:project'  => sub {
 
     my $server = $c->param('server');
 
-    $c->schedule_check($project, $server);
+    my $uid_obj  = Data::UUID->new;
+    my $uid      = $uid_obj->create();
+    my $check_id =  $uid_obj->to_string($uid);
 
-    return $c->render(text => "check schedulled\n", status => 200);
+    insert_check_into_db($check_id,$project,$server);
+
+    $c->schedule_check($project, $server, $check_id);
+
+    return $c->render(text => "check schedulled: $check_id\n", status => 200);
 
 };
 
@@ -101,6 +103,14 @@ get '/' => sub {
 
 };
 
+
+sub startup {
+
+    my $self = shift;
+
+    $self->secret('whatsup?');
+
+}
 
 app->start;
 

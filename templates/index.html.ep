@@ -29,10 +29,26 @@
     <%= $i->{time} %>
   </td>
   <td>
-    <% if ($i->{status} ne 'not exist') { %>
-      <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+    <% if ($i->{status} eq 'scheduled') { %>
+      <span class="label label-default">
+        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+      </span>
+    <% } elsif ($i->{status} eq 'ok') { %>
+      <span class="label label-success">
+        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+      </span>
+    <% } elsif ($i->{status} eq 'proccessing') { %>
+      <span class="label label-primary">
+        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+      </span>
+    <% } elsif ($i->{status} eq 'fail') { %>
+      <span class="label label-danger">
+        <a href="/<%= $i->{check_id} %>.txt" target="_blank"><%= $i->{status} %></a>
+      </span>
     <% } else { %>
-      <%= $i->{status} %>
+      <span class="label label-warning">
+        <%= $i->{status} %>
+      </span>
     <% } %>
   </td>
 
@@ -44,8 +60,6 @@
 
 </div>
 </div>
-
-%== include 'footer'
 
 </div>
 

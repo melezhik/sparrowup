@@ -47,7 +47,7 @@ sub get_checks_from_db {
         push @$list, {
             check_id   => $next->[0],
             project    => $next->[1],
-            server     => $next->[1],
+            server     => $next->[2],
             status     => $next->[3],
             time       => $next->[4],
         };
