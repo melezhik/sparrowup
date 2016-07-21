@@ -115,7 +115,7 @@ get '/report/:report'  => sub {
         fill_cols   => 1,
     );
     
-    open REPORT, "" or confess "can't open file public/$check_id.txt to read : $!";
+    open REPORT, "public/$check_id.txt" or confess "can't open file public/$check_id.txt to read : $!";
     $h->add_text(<REPORT>);
     close REPORT;
 
