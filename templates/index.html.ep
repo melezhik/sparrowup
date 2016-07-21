@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+
+  <div class="panel-heading"><strong>WhatsUP Reports</strong></div>
+
+  <div class="panel-body">
+    <table class="table">
+      <tr> 
+        <th>project</th> 
+        <th>server</th> 
+        <th>time</th> 
+        <th>status</th> 
+      </tr>
+      <tr>
+<% for my $i (@$results) { %>
+
+  <td>
+    <strong>
+      <a href="http://web.global.nibr.novartis.net/apps/cid/#projects/<%= $i->{project} %>">
+        <%= $i->{project} %>
+      </a>
+    </strong>
+  </td>
+  <td>
+    <%= $i->{server} %>
+  </td>
+  <td>
+    <%= (split /\s+/, $i->{time})[0] %>
+  </td>
+  <td>
+    <%= $i->{status} %>
+  </td>
+
+  </tr>
+
+<% } %>
+
+  </table>
+
+</div>
+</div>
+
+%== include 'footer'
+
+</div>
+
+

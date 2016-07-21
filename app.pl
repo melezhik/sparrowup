@@ -91,6 +91,12 @@ post '/check/:project'  => sub {
 
 };
 
+get '/' => sub {
+
+  my $results = get_checks_from_db();
+
+
+};
 
 
 app->start;

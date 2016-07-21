@@ -27,5 +27,28 @@ sub update_check_in_db {
     return;
 }
 
+sub get_checks_from_db {
+
+    my $sql = Mojo::SQLite->new('sqlite:db/main.db');
+
+    my $db = $sql->db;
+
+    my $db_results = $db->query('select check_id, status, t');
+
+    my $list;
+
+    while ( my $next = $db_results->array ){
+
+        push @$list, {
+            check_id   => $next->[0],
+            status     => $next->[1],
+            time       => $next->[2],
+        };
+
+    }
+
+    return $list;
+}
+
 1;
 
