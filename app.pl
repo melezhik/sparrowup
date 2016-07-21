@@ -43,7 +43,7 @@ helper sparrowdo_run => sub {
 
       $cmd.=" 1>$cdir/public/$check_id.txt 2>&1";
 
-      insert_check_into_db($check_id);
+      insert_check_into_db($check_id,$project,$server);
 
 
       $log->info("sparrowdo run scheduled ... : $cmd");
@@ -52,7 +52,7 @@ helper sparrowdo_run => sub {
 
       $log->info("sparrowdo done");
   
-      update_check_in_db($check_id,$st == 0 ? 'ok' : 'fail');
+      update_check_in_db($check_id, $st == 0 ? 'ok' : 'fail');
 
       $log->info("updated database entry");
 

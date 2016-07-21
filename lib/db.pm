@@ -1,12 +1,17 @@
 sub insert_check_into_db {
 
-    my $check_id = shift or confess 'usage: insert_check_into_db(*check_id)';
+    my $check_id = shift or confess 'usage: insert_check_into_db(*check_id,project,server)';
+    my $project  = shift or confess 'usage: insert_check_into_db(check_id,*project,server)';
+    my $server   = shift or confess 'usage: insert_check_into_db(check_id,project,*server)';
 
     my $sql = Mojo::SQLite->new('sqlite:db/main.db');
 
     my $db = $sql->db;
 
-    $db->query( 'insert into checks ( check_id ) values (?)', $check_id );
+    $db->query( 
+      'insert into checks ( check_id, project, server ) values ( ?, ?, ? )', 
+      $check_id, $project, $server 
+    );
 
 
     return;
@@ -14,15 +19,15 @@ sub insert_check_into_db {
 
 sub update_check_in_db {
 
-    my $check_id = shift or confess 'usage: update_check_in_db(*check_id,state)';
+    my $check_id = shift or confess 'usage: update_check_in_db(*check_id,status)';
 
-    my $state = shift or confess 'usage: update_check_in_db(check_id,*state)';
+    my $status = shift or confess 'usage: update_check_in_db(check_id,*status)';
 
     my $sql = Mojo::SQLite->new('sqlite:db/main.db');
 
     my $db = $sql->db;
 
-    $db->query('update users set state = ? where  check_id = ?', $state, $check_id );
+    $db->query('update checks set status = ? where  check_id = ?', $status, $check_id );
 
     return;
 }
@@ -33,7 +38,7 @@ sub get_checks_from_db {
 
     my $db = $sql->db;
 
-    my $db_results = $db->query('select check_id, status, t from checks');
+    my $db_results = $db->query('select check_id, project, server, status, t from checks');
 
     my $list;
 
@@ -41,8 +46,10 @@ sub get_checks_from_db {
 
         push @$list, {
             check_id   => $next->[0],
-            status     => $next->[1],
-            time       => $next->[2],
+            project    => $next->[1],
+            server     => $next->[1],
+            status     => $next->[3],
+            time       => $next->[4],
         };
 
     }
