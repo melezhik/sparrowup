@@ -93,8 +93,11 @@ post '/check/:project'  => sub {
 
 get '/' => sub {
 
+  my $c = shift;
+
   my $results = get_checks_from_db();
 
+  $c->render( template => 'index' , results => $results  );
 
 };
 

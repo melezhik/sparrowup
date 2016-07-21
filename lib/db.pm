@@ -33,7 +33,7 @@ sub get_checks_from_db {
 
     my $db = $sql->db;
 
-    my $db_results = $db->query('select check_id, status, t');
+    my $db_results = $db->query('select check_id, status, t from checks');
 
     my $list;
 
