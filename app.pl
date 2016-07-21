@@ -9,6 +9,7 @@ use Mojo::Log;
 use Mojo::SQLite;
 use Minion::Backend;
 use Minion;
+use Cwd;
 
 use constant repo_root => 'public/';
 
@@ -26,6 +27,8 @@ helper sparrowdo_run => sub {
 
     if (-d "$ENV{REPO}/$project"){
 
+      my $cdir = getcwd;
+
       my $cmd = "cd $ENV{REPO}/$project && sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
   
       $cmd.=" --ssh_user=".($c->param('ssh_user')) if ($c->param('ssh_user')); 
@@ -34,7 +37,7 @@ helper sparrowdo_run => sub {
   
       $cmd.=" --indentity_file=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
   
-      $cmd.=" 1>public/$check_id.txt 2>&1";
+      $cmd.=" 1>$cdir/public/$check_id.txt 2>&1";
   
       insert_check_into_db($check_id);
   
