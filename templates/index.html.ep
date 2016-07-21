@@ -1,5 +1,21 @@
 %= include 'header'
 
+<% if (flash('message')) {  %>
+
+<div class="container">
+
+<div class="alert alert-<%= flash('level') %> alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  <strong><%= flash('message') %></strong>
+</div>
+
+</div>
+
+<% } %>
+
+
 <div class="panel panel-default">
 
   <div class="panel-heading"><strong>WhatsUP Reports</strong></div>
@@ -11,6 +27,7 @@
         <th>server</th> 
         <th>time</th> 
         <th>status</th> 
+        <th>actions</th> 
       </tr>
       <tr>
 <% for my $i (@$results) { %>
@@ -51,7 +68,13 @@
       </span>
     <% } %>
   </td>
-
+  <td>
+    <form action="/check/<%= $i->{project} %>" method="POST" >
+    <input type=hidden name="web_ui" value="1">
+    <input type=hidden name="server" value="<%= $i->{server} %>">
+    <input type=submit value="reschedule server check">
+    </form>
+  </td>
   </tr>
 
 <% } %>

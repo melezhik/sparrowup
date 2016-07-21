@@ -82,6 +82,8 @@ post '/check/:project'  => sub {
 
     my $server = $c->param('server');
 
+    my $web_ui = $c->param('web_ui');
+
     my $uid_obj  = Data::UUID->new;
     my $uid      = $uid_obj->create();
     my $check_id =  $uid_obj->to_string($uid);
@@ -90,8 +92,11 @@ post '/check/:project'  => sub {
 
     $c->schedule_check($project, $server, $check_id);
 
-    return $c->render(text => "check schedulled: $check_id\n", status => 200);
-
+    if ($web_ui){
+      $c->flash( { message => "check for $project\@$server scheduled", level => 'success' })->redirect_to('/');
+    }else{
+      return $c->render(text => "check schedulled: $check_id\n", status => 200);
+    }
 };
 
 get '/' => sub {
