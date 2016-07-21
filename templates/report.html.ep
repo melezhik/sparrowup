@@ -5,7 +5,9 @@
   <div class="panel-heading"><strong>WhatsUP Report. ID <%= $check_id %></strong></div>
 
     <div class="panel-body">
-    <%== $data %>;
+    <pre class="report">
+      <%= $data2 %>
+    </pre>
     </div>
 
   </div>
