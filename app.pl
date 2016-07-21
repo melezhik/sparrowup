@@ -25,6 +25,8 @@ helper sparrowdo_run => sub {
     my $uid      = $uid_obj->create();
     my $check_id =  $uid_obj->to_string($uid);
 
+    my $log = Mojo::Log->new();
+
     if (-d "$ENV{REPO}/$project"){
 
       my $cdir = getcwd;
@@ -37,17 +39,31 @@ helper sparrowdo_run => sub {
   
       $cmd.=" --indentity_file=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
   
+      $cmd.=" --host=$server";
+
       $cmd.=" 1>$cdir/public/$check_id.txt 2>&1";
-  
+
       insert_check_into_db($check_id);
-  
+
+
+      $log->info("sparrowdo run scheduled ... : $cmd");
+
       my $st = system($cmd);
+
+      $log->info("sparrowdo done");
   
       update_check_in_db($check_id,$st == 0 ? 'ok' : 'fail');
+
+      $log->info("updated database entry");
+
   
     } else {
 
+      $log->warn("project $ENV{REPO}/$project does not exist!");
+
       update_check_in_db($check_id,'not exist');
+
+      $log->info("updated database entry");
 
     }
 

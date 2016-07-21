@@ -1,4 +1,4 @@
-db/minion.db
+db/minion.*
 local/
 public/*.txt
 *.log
