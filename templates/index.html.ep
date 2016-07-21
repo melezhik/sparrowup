@@ -48,7 +48,7 @@
   <td>
     <% if ($i->{status} eq 'scheduled') { %>
       <span class="label label-default">
-        <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
+        <%= $i->{status} %>
       </span>
     <% } elsif ($i->{status} eq 'ok') { %>
       <span class="label label-success">
