@@ -27,9 +27,9 @@ helper sparrowdo_run => sub {
 
     if (-d "$config->{repo}/$project"){
 
-      my $cmd = "mkdir -p $config->{reports_dir } && cd $config->{repo}/$project && timeout -s KILL ";
+      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 60";
 
-      $cmd = " sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
+      $cmd .= " sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
   
       $cmd.=" --ssh_user=".($c->param('ssh_user')) if ($c->param('ssh_user')); 
   
