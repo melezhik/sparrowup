@@ -9,12 +9,11 @@ use Mojo::Log;
 use Mojo::SQLite;
 use Minion::Backend;
 use Minion;
-use Cwd;
 use HTML::FromANSI (); # avoid exports if using OO
 
-use constant repo_root => 'public/';
-
 plugin 'Minion' => { SQLite  => 'db/minion.db'};
+
+my $config = plugin Config => { file => '/etc/whatsup.conf' };
 
 require 'lib/db.pm';
 
@@ -26,11 +25,11 @@ helper sparrowdo_run => sub {
 
     update_check_in_db($check_id, 'proccessing');
 
-    if (-d "$ENV{REPO}/$project"){
+    if (-d "$config->{repo}/$project"){
 
-      my $cdir = getcwd;
+      my $cmd = "mkdir -p $config->{reports_dir } && cd $config->{repo}/$project && timeout -s KILL ";
 
-      my $cmd = "cd $ENV{REPO}/$project && sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
+      $cmd = " sparrowdo --http_proxy=$ENV{http_proxy} --https_proxy=$ENV{https_proxy}";
   
       $cmd.=" --ssh_user=".($c->param('ssh_user')) if ($c->param('ssh_user')); 
   
@@ -40,7 +39,7 @@ helper sparrowdo_run => sub {
   
       $cmd.=" --host=$server";
 
-      $cmd.=" 1>$cdir/public/$check_id.txt 2>&1";
+      $cmd.=" 1>$config->{reports_dir}/$check_id.txt 2>&1";
 
 
       $log->info("sparrowdo run scheduled ... : $cmd");
@@ -56,7 +55,7 @@ helper sparrowdo_run => sub {
   
     } else {
 
-      $log->warn("project $ENV{REPO}/$project does not exist!");
+      $log->warn("project $config->{repo}/$project does not exist!");
 
       update_check_in_db($check_id,'not exist');
 
@@ -119,18 +118,28 @@ get '/report/:report'  => sub {
     my $h = HTML::FromANSI->new(
         fill_cols   => 1, linewrap => 1, lf_to_crlf => 1, cols => 70
     );
+
+    my $log = Mojo::Log->new();
     
-    open REPORT, "public/$check_id.txt" or confess "can't open file public/$check_id.txt to read : $!";
-    $h->add_text(<REPORT>);
-    close REPORT;
+    if (open REPORT, "$config->{reports_dir}/$check_id.txt"){
 
-    #return $c->render(text => "OK", status => 200);
+      $h->add_text(<REPORT>);
 
-   return $c->render( 
-    template => 'report',  
-    out => $h->html, 
-    check_id => $check_id  
-  );
+      close REPORT;
+
+      return $c->render( 
+        template => 'report',  
+        out => $h->html, 
+        check_id => $check_id  
+      );
+  
+    } else {
+
+      $log->error("can't open file $config->{reports_dir}/$check_id.txt to read : $!");
+      return $c->render(text => "report $check_id not found", status => 404);
+ 
+   }
+
 
     
 };

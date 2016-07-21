@@ -22,10 +22,6 @@ You should checkout some sparrowdo scenarios:
 
     $ git clone $some-remote-repository /path/to/repo
 
-And point it to the running whatsup service:
-
-    $ cd whatsup && REPO=/path/to/repo carton exec morbo app.pl
-
 A structure of  repository should be:
 
     $ project-foo/sparrowfile
@@ -34,6 +30,21 @@ A structure of  repository should be:
 
 So on ...
 
+And then setup /etc/whatsup.conf:
+
+    $ cat /etc/whatsup.conf
+
+    {
+      'repo' => '/home/whatsup/whatsup_repo',
+      'reports_dir' => '/home/whatsup/reports'
+    }
+    
+
+Now you are read to run applicatio:
+
+    $ carton exec morbo app.pl
+
+And job queue, see next.
 
 # Running Job queue
 
@@ -42,7 +53,7 @@ A Minion asynchronous job executor should be launched to handle incoming check r
 For example:
 
     $ cd whatsup 
-    $ REPO=/path/to/repo carton exec ./app.pl minion worker 
+    $ exec ./app.pl minion worker 
 
 Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on using job queue.
 

@@ -1,8 +1,8 @@
 db/
 
 local/
-public/*.txt
 *.log
 *.pid
 cpanfile.snapshot
+nohup.out
 
