@@ -37,7 +37,7 @@ helper sparrowdo_run => sub {
   
       $cmd.=" --indentity_file=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
   
-      $cmd.=" --host=$server";
+      $cmd.=" --host=$server --bootstrap";
 
       $cmd.=" 1>$config->{reports_dir}/$check_id.txt 2>&1";
 
