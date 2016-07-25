@@ -102,11 +102,11 @@ Example:
     $ curl -d 'server=192.168.0.0.1' 127.0.0.1:3000/check/nginx
 
 
-Advanced usage. 
+## Advanced usage. 
 
-WARNING. THIS SECTION IS NOT IMPLEMENTED YET.
+Setting sparrowdo client parameters.
 
-You may pass additional parameters to set up credentials to use when issuing ssh connect to target host:
+You may pass additional parameters consuming by sparrowdo client:
 
 ### ssh_user
 
@@ -116,16 +116,12 @@ A ssh_user ID
 
 A server ssh port to connect to
 
-### identity_file
-
-Path to identity file
-
 Follow [sparrowdo documentation](https://github.com/melezhik/sparrowdo#sparrowdo-client-command-line-parameters)
 to know more about sparrowdo client parameters.
 
 For example:
 
-    $ curl -d server=192.168.0.0.1 -d ssh-user=admin -d identity_file=~/.ssh/admin.pem  127.0.0.1:3000/check/nginx
+    $ curl -d server=192.168.0.0.1 -d ssh_user=vagrant -d ssh_port=2222  127.0.0.1:3000/check/nginx
 
 ## Get a server status
 

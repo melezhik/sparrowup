@@ -39,8 +39,11 @@ helper sparrowdo_run => sub {
   
       $cmd.=" --host=$server --bootstrap";
 
-      $cmd.=" 1>$config->{reports_dir}/$check_id.txt 2>&1";
+      $cmd.= " ssh_user=".($c->param('ssh_user')) if $c->param('ssh_user');
 
+      $cmd.= " ssh_port=".($c->param('ssh_port')) if $c->param('ssh_port');
+
+      $cmd.=" 1>$config->{reports_dir}/$check_id.txt 2>&1";
 
       $log->info("sparrowdo run scheduled ... : $cmd");
 
@@ -88,6 +91,12 @@ post '/check/:project'  => sub {
     my $check_id =  $uid_obj->to_string($uid);
 
     insert_check_into_db($check_id,$project,$server);
+
+    my $params = {};
+
+    $params->{ssh_user} = $c->param('ssh_user') if $c->param('ssh_user');
+
+    $params->{ssh_port} = $c->param('ssh_port') if $c->param('ssh_port');
 
     $c->schedule_check($project, $server, $check_id);
 
