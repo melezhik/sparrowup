@@ -27,25 +27,19 @@ helper sparrowdo_run => sub {
 
     if (-d "$config->{repo}/$project"){
 
-      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 60";
+      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 60 sparrowdo";
+      
+      $cmd.= " --http_proxy=$ENV{http_proxy}" if $ENV{http_proxy};
 
-      $cmd .= " sparrowdo --http_proxy=$ENV{http_proxy}" if $ENV{http_proxy};
+      $cmd.= " --https_proxy=$ENV{https_proxy}" if $ENV{https_proxy};
 
-      $cmd .= " sparrowdo --https_proxy=$ENV{https_proxy}" if $ENV{https_proxy};
-
-      $cmd.=" --ssh_user=".($c->param('ssh_user')) if ($c->param('ssh_user')); 
-  
-      $cmd.=" --ssh_port=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
-  
-      $cmd.=" --indentity_file=".($c->param('ssh_port')) if ($c->param('ssh_port')); 
-  
-      $cmd.=" --host=$server --bootstrap";
+      $cmd.= " --host=$server --bootstrap";
 
       $cmd.= " ssh_user=".($c->param('ssh_user')) if $c->param('ssh_user');
 
       $cmd.= " ssh_port=".($c->param('ssh_port')) if $c->param('ssh_port');
 
-      $cmd.=" 1>$config->{reports_dir}/$check_id.txt 2>&1";
+      $cmd.= " 1>$config->{reports_dir}/$check_id.txt 2>&1";
 
       $log->info("sparrowdo run scheduled ... : $cmd");
 
