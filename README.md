@@ -17,8 +17,9 @@ Sparrowdo
 
 # Configuration
 
-You should checkout some sparrowdo scenarios:
+## Set up sparrowdo repositories
 
+You should checkout some sparrowdo scenarios:
 
     $ git clone $some-remote-repository /path/to/repo
 
@@ -40,22 +41,27 @@ And then setup /etc/whatsup.conf:
     }
     
 
-Now you are read to run applicatio:
+## Populate database
+
+
+    $ bash utils/populate_db.bash
+
+
+## Run application
+
+This is a mojo application, thus:
 
     $ carton exec morbo app.pl
 
-And job queue, see next.
+## Run job queue 
 
-# Running Job queue
-
-A Minion asynchronous job executor should be launched to handle incoming check requests.
+A minion asynchronous job executor should be launched to handle incoming check requests.
 
 For example:
 
-    $ cd whatsup 
     $ exec ./app.pl minion worker 
 
-Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on using job queue.
+Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on minion job queue.
 
 # Whatsup API
 
