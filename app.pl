@@ -13,7 +13,7 @@ use HTML::FromANSI (); # avoid exports if using OO
 
 plugin 'Minion' => { SQLite  => 'db/minion.db'};
 
-my $config = plugin Config => { file => '/etc/whatsup.conf' };
+my $config = plugin Config => { file => '/etc/sparrowup.conf' };
 
 require 'lib/db.pm';
 
@@ -157,7 +157,7 @@ sub startup {
 
     my $self = shift;
 
-    $self->secret('whatsup?');
+    $self->secret('sparrowup?');
 
 }
 
