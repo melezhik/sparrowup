@@ -69,10 +69,10 @@
     <% } %>
   </td>
   <td>
-    <form action="/check/<%= $i->{project} %>" method="POST" >
+    <form action="/job/<%= $i->{project} %>" method="POST" >
     <input type=hidden name="web_ui" value="1">
     <input type=hidden name="server" value="<%= $i->{server} %>">
-    <input type=submit value="reschedule server check">
+    <input type=submit value="reschedule job">
     </form>
   </td>
   </tr>
