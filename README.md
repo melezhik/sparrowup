@@ -31,7 +31,9 @@ A structure of  repository should be:
 
 So on ...
 
-And then setup /etc/whatsup.conf:
+## Set up whatsup service configuration file. 
+
+This is should be Mojolicious::Config file placed at /etc/whatsup.conf path.
 
     $ cat /etc/whatsup.conf
 
@@ -40,14 +42,22 @@ And then setup /etc/whatsup.conf:
       'reports_dir' => '/home/whatsup/reports'
     }
     
+Configuration parameters:
+
+### repo
+
+Path to the directory with sparrowdo scenarios
+
+## reports_dir
+
+A directory where reports data will be kept. Should be writable by whatsup service.
+
 
 ## Populate database
 
-
     $ bash utils/populate_db.bash
 
-
-## Run application
+## Run whatsup service
 
 This is a mojo application, thus:
 
@@ -59,7 +69,7 @@ A minion asynchronous job executor should be launched to handle incoming check r
 
 For example:
 
-    $ exec ./app.pl minion worker 
+    $ carton exec ./app.pl minion worker 
 
 Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on minion job queue.
 
@@ -67,7 +77,6 @@ Follow Minion [documentation](https://metacpan.org/pod/Minion) for details on mi
 
 All the API is exposed as http service API accessible by 0.0.0.0:3000. A bind address / port number could be changed
 when running service via [morbo](https://metacpan.org/pod/distribution/Mojolicious/script/morbo), follow morbo documentation.
-
 
 ## Schedule a server check
 
@@ -94,6 +103,8 @@ Example:
 
 
 Advanced usage. 
+
+WARNING. THIS SECTION IS NOT IMPLEMENTED YET.
 
 You may pass additional parameters to set up credentials to use when issuing ssh connect to target host:
 
@@ -129,7 +140,7 @@ For example:
 
 ## Reports
 
-All generated reports are accessible as static pages.
+All generated reports are accessible via service Web UI:
 
     $ firefox 127.0.0.1:3000
 
