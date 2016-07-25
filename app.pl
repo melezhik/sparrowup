@@ -76,7 +76,7 @@ helper schedule_check => sub { shift->minion->enqueue( check_task => [@_]) };
 
 # API
 
-post '/check/:project'  => sub {
+post '/job/:project'  => sub {
 
     my $c = shift;
 

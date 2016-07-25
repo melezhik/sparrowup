@@ -16,7 +16,7 @@ Sparrowdo should be installed on the same hosts where sparrowup service gets run
 
 # Configuration
 
-## Set up sparrowdo repositories
+## Set up sparrowdo repository
 
 You should checkout some sparrowdo scenarios:
 
