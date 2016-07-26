@@ -107,6 +107,11 @@ Setting sparrowdo client parameters.
 
 You may pass additional parameters consuming by sparrowdo client:
 
+### verbose
+
+Enable verbose mode. Useful when debugging sparrowdo scenarios.
+
+
 ### ssh_user
 
 A ssh_user ID

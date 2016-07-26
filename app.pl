@@ -35,9 +35,11 @@ helper sparrowdo_run => sub {
 
       $cmd.= " --host=$server --bootstrap";
 
-      $cmd.= " ssh_user=".($c->param('ssh_user')) if $c->param('ssh_user');
+      $cmd.= " ssh_user=".($params->{ssh_user}) if $params->{ssh_user};
 
-      $cmd.= " ssh_port=".($c->param('ssh_port')) if $c->param('ssh_port');
+      $cmd.= " ssh_port=".($params->{ssh_port}) if $params->{ssh_port};
+
+      $cmd.= " --verbose"  if $params->{verbose};
 
       $cmd.= " 1>$config->{reports_dir}/$check_id.txt 2>&1";
 
@@ -94,7 +96,9 @@ post '/job/:project'  => sub {
 
     $params->{ssh_port} = $c->param('ssh_port') if $c->param('ssh_port');
 
-    $c->schedule_check($project, $server, $check_id);
+    $params->{verbose} = 1 if $c->param('verbose');
+
+    $c->schedule_check($project, $server, $check_id, $params);
 
     if ($web_ui){
       $c->flash( { message => "check for $project\@$server scheduled", level => 'success' })->redirect_to('/');
