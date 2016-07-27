@@ -35,9 +35,9 @@ helper sparrowdo_run => sub {
 
       $cmd.= " --host=$server --bootstrap";
 
-      $cmd.= " ssh_user=".($params->{ssh_user}) if $params->{ssh_user};
+      $cmd.= " --ssh_user=".($params->{ssh_user}) if $params->{ssh_user};
 
-      $cmd.= " ssh_port=".($params->{ssh_port}) if $params->{ssh_port};
+      $cmd.= " --ssh_port=".($params->{ssh_port}) if $params->{ssh_port};
 
       $cmd.= " --verbose"  if $params->{verbose};
 
