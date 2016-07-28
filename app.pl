@@ -27,7 +27,7 @@ helper sparrowdo_run => sub {
 
     if (-d "$config->{repo}/$project"){
 
-      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 60 sparrowdo";
+      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 120 sparrowdo";
       
       $cmd.= " --http_proxy=$ENV{http_proxy}" if $ENV{http_proxy};
 
