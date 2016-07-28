@@ -8,5 +8,14 @@
 
 <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 
+<!-- syntax highlighter comes from https://highlightjs.org -->
+
+<link rel="stylesheet" href="/css/hl/styles/default.css">
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
 <head><title>SparrowUP!</title></head>
 

@@ -34,7 +34,7 @@
 
   <td>
     <strong>
-      <a href="/repo/<%= $i->{project} %>">
+      <a href="/repo/<%= $i->{project} %>" target="_blank">
         <%= $i->{project} %>
       </a>
     </strong>

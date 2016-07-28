@@ -153,6 +153,37 @@ get '/report/:report'  => sub {
     
 };
 
+get '/repo/:project' => sub {
+
+  my $c = shift;
+
+  my $project = $c->stash('project');
+
+  my $log = Mojo::Log->new();
+    
+  if (open SPARROWFILE, "$config->{repo}/$project/sparrowfile"){
+
+    my $source = join "", <SPARROWFILE>;
+
+    close SPARROWFILE;
+
+    return $c->render( 
+      template  => 'sparrowfile',  
+      project   => $project,
+      source    => $source,
+    );
+
+  } else {
+
+    $log->error("can't open file $config->{repo}/$project/sparrowfile to read : $!");
+
+    return $c->render(text => "$project sparrowfile not found", status => 404);
+ 
+ }
+
+};
+
+
 sub startup {
 
     my $self = shift;
