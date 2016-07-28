@@ -8,7 +8,7 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-  <span class="label label-default"><%= flash('message') %></span>
+  <span><font color="brown"><%= flash('message') %></font></span>
 </div>
 
 </div>
@@ -86,7 +86,7 @@
               <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
             </span>
           <% } elsif ($i->{status} eq 'proccessing') { %>
-            <span class="label label-info"><%= $i->{status} %>
+            <span class="label label-info">
               <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
             </span>
           <% } elsif ($i->{status} eq 'fail') { %>
