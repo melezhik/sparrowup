@@ -15,74 +15,106 @@
 
 <% } %>
 
+<div class="panel panel-default">
+
+  <div class="panel-heading"><strong>Launch SparrowDo Job</strong></div>
+
+    <div class="panel-body">
+
+      <form class="form-inline" action="/job" method="POST">
+        <div class="form-group">
+          <label class="sr-only" for="project">Project</label>
+          <input type="text" class="form-control" id="project" name="project" placeholder="project">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="server">Server</label>
+          <input type="text" class="form-control" id="server" name="server" placeholder="server">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="verbose"> verbose
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Go!</button>
+      </form>
+      
+    </div>
+
+  </div>
+
+</div>
 
 <div class="panel panel-default">
 
-  <div class="panel-heading"><strong>SparrowUP Reports</strong></div>
+  <div class="panel-heading"><strong>SparrowDo Reports</strong></div>
 
-  <div class="panel-body">
-    <table class="table">
-      <tr> 
-        <th>project</th> 
-        <th>server</th> 
-        <th>time</th> 
-        <th>status</th> 
-        <th>actions</th> 
-      </tr>
-      <tr>
-<% for my $i (@$results) { %>
+    <div class="panel-body">
 
-  <td>
-    <strong>
-      <a href="/repo/<%= $i->{project} %>" target="_blank">
-        <%= $i->{project} %>
-      </a>
-    </strong>
-  </td>
-  <td>
-    <%= $i->{server} %>
-  </td>
-  <td>
-    <%= $i->{time} %>
-  </td>
-  <td>
-    <% if ($i->{status} eq 'scheduled') { %>
-      <span class="label label-default">
-        <%= $i->{status} %>
-      </span>
-    <% } elsif ($i->{status} eq 'ok') { %>
-      <span class="label label-success">
-        <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
-      </span>
-    <% } elsif ($i->{status} eq 'proccessing') { %>
-      <span class="label label-primary">
-        <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
-      </span>
-    <% } elsif ($i->{status} eq 'fail') { %>
-      <span class="label label-danger">
-        <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
-      </span>
-    <% } else { %>
-      <span class="label label-warning">
-        <%= $i->{status} %>
-      </span>
-    <% } %>
-  </td>
-  <td>
-    <form action="/job/<%= $i->{project} %>" method="POST" >
-    <input type=hidden name="web_ui" value="1">
-    <input type=hidden name="server" value="<%= $i->{server} %>">
-    <input type=submit value="reschedule job">
-    </form>
-  </td>
-  </tr>
+      <table class="table">
+        <tr> 
+          <th>project</th> 
+          <th>server</th> 
+          <th>time</th> 
+          <th>status</th> 
+          <th>actions</th> 
+        </tr>
 
-<% } %>
+        <tr>
 
-  </table>
+      <% for my $i (@$results) { %>
+      
+        <td>
+          <strong>
+            <a href="/repo/<%= $i->{project} %>" target="_blank">
+              <%= $i->{project} %>
+            </a>
+          </strong>
+        </td>
+        <td>
+          <%= $i->{server} %>
+        </td>
+        <td>
+          <%= $i->{time} %>
+        </td>
+        <td>
+          <% if ($i->{status} eq 'scheduled') { %>
+            <span class="label label-default">
+              <%= $i->{status} %>
+            </span>
+          <% } elsif ($i->{status} eq 'ok') { %>
+            <span class="label label-success">
+              <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
+            </span>
+          <% } elsif ($i->{status} eq 'proccessing') { %>
+            <span class="label label-primary">
+              <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
+            </span>
+          <% } elsif ($i->{status} eq 'fail') { %>
+            <span class="label label-danger">
+              <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
+            </span>
+          <% } else { %>
+            <span class="label label-warning">
+              <%= $i->{status} %>
+            </span>
+          <% } %>
+        </td>
+        <td>
+          <form action="/job/<%= $i->{project} %>" method="POST" >
+          <input type=hidden name="web_ui" value="1">
+          <input type=hidden name="server" value="<%= $i->{server} %>">
+          <input type=submit value="reschedule job">
+          </form>
+        </td>
+        </tr>
+      
+      <% } %>
+      
+        </table>
+      
+      </div>
 
-</div>
-</div>
+  </div>
 
 </div>
 

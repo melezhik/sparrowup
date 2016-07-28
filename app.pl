@@ -74,6 +74,32 @@ helper schedule_check => sub { shift->minion->enqueue( check_task => [@_]) };
 
 # API
 
+post '/job'  => sub {
+
+    my $c = shift;
+
+    my $project = $c->param('project');
+
+    my $server = $c->param('server');
+
+    my $uid_obj  = Data::UUID->new;
+
+    my $uid      = $uid_obj->create();
+
+    my $check_id =  $uid_obj->to_string($uid);
+
+    insert_check_into_db($check_id,$project,$server);
+
+    my $params = {};
+
+    $params->{verbose} = 1 if $c->param('verbose');
+
+    $c->schedule_check($project, $server, $check_id, $params);
+
+    $c->flash( { message => "check for $project\@$server scheduled", level => 'success' })->redirect_to('/');
+
+};
+
 post '/job/:project'  => sub {
 
     my $c = shift;
