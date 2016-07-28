@@ -96,7 +96,7 @@ post '/job'  => sub {
 
     $c->schedule_check($project, $server, $check_id, $params);
 
-    $c->flash( { message => "check for $project\@$server scheduled", level => 'success' })->redirect_to('/');
+    $c->flash( { message => "job for $project\@$server scheduled", level => 'success' })->redirect_to('/');
 
 };
 
@@ -127,9 +127,9 @@ post '/job/:project'  => sub {
     $c->schedule_check($project, $server, $check_id, $params);
 
     if ($web_ui){
-      $c->flash( { message => "check for $project\@$server scheduled", level => 'success' })->redirect_to('/');
+      $c->flash( { message => "job for $project\@$server scheduled", level => 'success' })->redirect_to('/');
     }else{
-      return $c->render(text => "check schedulled: $check_id\n", status => 200);
+      return $c->render(text => "job schedulled: $check_id\n", status => 200);
     }
 };
 

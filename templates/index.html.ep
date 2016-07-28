@@ -8,7 +8,7 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-  <strong><%= flash('message') %></strong>
+  <span class="label label-default"><%= flash('message') %></span>
 </div>
 
 </div>
@@ -79,14 +79,14 @@
         <td>
           <% if ($i->{status} eq 'scheduled') { %>
             <span class="label label-default">
-              <%= $i->{status} %>
+              <strong><%= $i->{status} %></strong>
             </span>
           <% } elsif ($i->{status} eq 'ok') { %>
             <span class="label label-success">
               <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
             </span>
           <% } elsif ($i->{status} eq 'proccessing') { %>
-            <span class="label label-primary">
+            <span class="label label-info"><%= $i->{status} %>
               <a href="/report/<%= $i->{check_id} %>" target="_blank"><%= $i->{status} %></a>
             </span>
           <% } elsif ($i->{status} eq 'fail') { %>
@@ -103,7 +103,7 @@
           <form action="/job/<%= $i->{project} %>" method="POST" >
           <input type=hidden name="web_ui" value="1">
           <input type=hidden name="server" value="<%= $i->{server} %>">
-          <input type=submit value="reschedule job">
+          <button type="submit" class="btn btn-primary">reschedule job</button>
           </form>
         </td>
         </tr>
