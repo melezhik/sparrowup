@@ -27,7 +27,7 @@ helper sparrowdo_run => sub {
 
     if (-d "$config->{repo}/$project"){
 
-      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 60 sparrowdo";
+      my $cmd = "mkdir -p $config->{reports_dir} && cd $config->{repo}/$project && timeout -s KILL 120 sparrowdo";
       
       $cmd.= " --http_proxy=$ENV{http_proxy}" if $ENV{http_proxy};
 
@@ -35,9 +35,9 @@ helper sparrowdo_run => sub {
 
       $cmd.= " --host=$server --bootstrap";
 
-      $cmd.= " ssh_user=".($params->{ssh_user}) if $params->{ssh_user};
+      $cmd.= " --ssh_user=".($params->{ssh_user}) if $params->{ssh_user};
 
-      $cmd.= " ssh_port=".($params->{ssh_port}) if $params->{ssh_port};
+      $cmd.= " --ssh_port=".($params->{ssh_port}) if $params->{ssh_port};
 
       $cmd.= " --verbose"  if $params->{verbose};
 
@@ -74,6 +74,32 @@ helper schedule_check => sub { shift->minion->enqueue( check_task => [@_]) };
 
 # API
 
+post '/job'  => sub {
+
+    my $c = shift;
+
+    my $project = $c->param('project');
+
+    my $server = $c->param('server');
+
+    my $uid_obj  = Data::UUID->new;
+
+    my $uid      = $uid_obj->create();
+
+    my $check_id =  $uid_obj->to_string($uid);
+
+    insert_check_into_db($check_id,$project,$server);
+
+    my $params = {};
+
+    $params->{verbose} = 1 if $c->param('verbose');
+
+    $c->schedule_check($project, $server, $check_id, $params);
+
+    $c->flash( { message => "job for $project\@$server scheduled", level => 'success' })->redirect_to('/');
+
+};
+
 post '/job/:project'  => sub {
 
     my $c = shift;
@@ -101,9 +127,9 @@ post '/job/:project'  => sub {
     $c->schedule_check($project, $server, $check_id, $params);
 
     if ($web_ui){
-      $c->flash( { message => "check for $project\@$server scheduled", level => 'success' })->redirect_to('/');
+      $c->flash( { message => "job for $project\@$server scheduled", level => 'success' })->redirect_to('/');
     }else{
-      return $c->render(text => "check schedulled: $check_id\n", status => 200);
+      return $c->render(text => "job schedulled: $check_id\n", status => 200);
     }
 };
 
@@ -152,6 +178,37 @@ get '/report/:report'  => sub {
 
     
 };
+
+get '/repo/:project' => sub {
+
+  my $c = shift;
+
+  my $project = $c->stash('project');
+
+  my $log = Mojo::Log->new();
+    
+  if (open SPARROWFILE, "$config->{repo}/$project/sparrowfile"){
+
+    my $source = join "", <SPARROWFILE>;
+
+    close SPARROWFILE;
+
+    return $c->render( 
+      template  => 'sparrowfile',  
+      project   => $project,
+      source    => $source,
+    );
+
+  } else {
+
+    $log->error("can't open file $config->{repo}/$project/sparrowfile to read : $!");
+
+    return $c->render(text => "$project sparrowfile not found", status => 404);
+ 
+ }
+
+};
+
 
 sub startup {
 
