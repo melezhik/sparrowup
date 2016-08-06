@@ -150,6 +150,14 @@ get '/report/:report'  => sub {
 
     my $check_id = $c->stash('report');
 
+    @HTML::FromANSI::Color = (
+
+      qw(navy   darkred darkgreen),
+      '#8b8b00',
+      qw(darkblue darkmagenta darkcyan gray dimgray  red  green  yellow  blue     magenta   cyan white)
+
+    );
+    
     my $h = HTML::FromANSI->new(
         fill_cols   => 1, linewrap => 1, lf_to_crlf => 1, cols => 70
     );
