@@ -152,7 +152,7 @@ get '/report/:report'  => sub {
 
     @HTML::FromANSI::Color = (
 
-      qw(gray   darkred darkgreen),
+      qw( white darkred darkgreen),
       '#8b8b00',
       qw(darkblue darkmagenta darkcyan gray dimgray  red  green  yellow  blue     magenta   cyan white)
 
